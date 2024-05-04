@@ -1,0 +1,107 @@
+export const exercises = {
+    chest: [
+        "Bench Press",
+        "Push Up",
+        "Dumbbell Flyes",
+        "Incline Bench Press",
+        "Decline Bench Press",
+        "Cable Flyes",
+        "Pec Deck Machine",
+        "Chest Dips",
+        "Chest Press Machine",
+        "Pullovers"
+    ],
+    arms: [
+        "Bicep Curls",
+        "Tricep Dips",
+        "Hammer Curls",
+        "Skull Crushers",
+        "Preacher Curls",
+        "Tricep Extensions",
+        "Close Grip Bench Press",
+        "Barbell Curls",
+        "Cable Rope Tricep Pushdowns",
+        "Concentration Curls"
+    ],
+    back: [
+        "Deadlifts",
+        "Pull Up",
+        "Bent Over Rows",
+        "Lat Pulldowns",
+        "T-Bar Rows",
+        "Seated Rows",
+        "Single Arm Dumbbell Rows",
+        "Hyperextensions",
+        "Good Mornings",
+        "Face Pulls"
+    ],
+    legs: [
+        "Squats",
+        "Lunges",
+        "Leg Press",
+        "Deadlifts",
+        "Calf Raises",
+        "Leg Curls",
+        "Leg Extensions",
+        "Hack Squats",
+    ],
+    shoulders: [
+        "Overhead Press",
+        "Lateral Raises",
+        "Front Raises",
+        "Upright Rows",
+        "Shrugs",
+        "Arnold Press",
+        "Reverse Flyes",
+        "Military Press",
+        "Lateral Dumbbell Raises",
+        "Barbell Shoulder Press"
+    ],
+    abs: [
+        "Crunches",
+        "Planks",
+        "Leg Raises",
+        "Russian Twists",
+        "Mountain Climbers",
+        "Bicycle Crunches",
+        "Hanging Leg Raises",
+        "Flutter Kicks",
+        "Sit-Ups",
+        "Woodchoppers"
+    ],
+    glutes: [
+        "Hip Thrusts",
+        "Glute Bridges",
+        "Donkey Kicks",
+        "Fire Hydrants",
+        "Deadlifts",
+        "Squats",
+        "Lunges",
+        "Step-Ups",
+        "Sumo Squats",
+        "Good Mornings"
+    ],
+    calves: [
+        "Calf Raises",
+        "Seated Calf Raises",
+        "Standing Calf Raises",
+        "Calf Press on Leg Press Machine",
+        "Donkey Calf Raises",
+        "Jump Rope",
+        "Box Jumps",
+        "Skipping"
+    ],
+    forearms: [
+        "Wrist Curls",
+        "Reverse Wrist Curls",
+        "Hammer Curls",
+        "Farmers Walk",
+        "Plate Pinch Holds",
+        "Wrist Roller",
+        "Grip Strengthening Exercises",
+        "Dead Hangs",
+        "Barbell Holds",
+        "Hand Grippers"
+    ],
+
+}
