@@ -20,3 +20,20 @@ export async function getSpecificExercises(bodyPart) {
       console.error(error);
     }
   }
+
+export async function displayExercises(){
+  try {
+    const response = await fetch(`https://exercisedb.p.rapidapi.com/exercises?limit=10`, {
+      method: 'GET',
+      headers: {
+        'X-RapidAPI-Key': apiKey,
+        'X-RapidAPI-Host': 'exercisedb.p.rapidapi.com'
+      }
+    });
+    const data = await response.json();
+    console.log(data);
+    return data
+  } catch (error) {
+    console.error(error);
+  }
+}
