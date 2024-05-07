@@ -14,21 +14,21 @@ function page() {
                   <p>PR Bench</p>
                   <label className="input input-bordered flex items-center gap-2">
                   <input type="number" className="grow w-24" placeholder="N/A" />
-                  <span className="badge badge-info">lbs</span>
+                  <span className="badge badge-info bg-stone-800 text-white text-lg p-3">lbs</span>
                   </label>
                 </div>
                 <div>
                   <p>PR Deadlift</p>
                   <label className="input input-bordered flex items-center gap-2">
                   <input type="number" className="grow w-24" placeholder="N/A" />
-                  <span className="badge badge-info">lbs</span>
+                  <span className="badge badge-info bg-stone-800 text-white text-lg p-3">lbs</span>
                 </label>
               </div>
               <div>
                 <p>PR Squat</p>
                 <label className="input input-bordered flex items-center gap-2">
                 <input type="number" className="grow w-24" placeholder="N/A" />
-                <span className="badge badge-info">lbs</span>
+                <span className="badge badge-info bg-stone-800 text-white text-lg p-3">lbs</span>
               </label>
           </div>
         </div>
