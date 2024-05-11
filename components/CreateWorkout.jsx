@@ -34,10 +34,10 @@ function CreateWorkout() {
     <dialog id="my_modal_3" className="modal">
       <div className="modal-box max-w-screen-xl relative">
         <h3 className="font-bold text-lg mb-4">Workout Log</h3>
-        <div className="overflow-x-auto">
+        <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" onClick={() => document.getElementById('my_modal_3').close()}>✕</button>
+        <div className="overflow-x-auto relative">
           <form onSubmit={postWorkout} method="dialog">
-            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" onClick={() => document.getElementById('my_modal_3').close()}>✕</button>
-            <table className="table mb-16">
+            <table className="table mb-24">
               <thead>
                 <tr>
                   <th>EXERCISE</th>
