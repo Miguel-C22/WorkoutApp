@@ -1,40 +1,43 @@
-import {React, useState} from 'react'
+import {React, useState, useEffect} from 'react'
 
 function CreateWorkout() {
   const [exerciseRows, setExerciseRows] = useState([]);
-  const [exerciseKey, setExerciseKey] = useState(1);
 
-  function addAnotherExercise() {
-    setExerciseRows([...exerciseRows, createExerciseRow()]);
-    setExerciseKey(exerciseKey + 1);
+  // Function to add a new row
+  const addExerciseRow = () => {
+    setExerciseRows([...exerciseRows, {
+      exercise: '',
+      sets: '',
+      reps: '',
+      weight: ''
+    }]);
+    console.log(exerciseRows)
+  };
+
+  // Function to remove a row
+  const removeExerciseRow = (indexToRemove) => {
+    setExerciseRows(exerciseRows.filter((_, index) => index !== indexToRemove));
+  };
+
+  const postWorkout = (e) => {
+    e.preventDefault()
+    console.log(exerciseRows)
   }
 
-   function removeExercise(index) {
-    setExerciseRows(exerciseRows.filter((_, i) => i !== index));
-  }
-
-  
-  function createExerciseRow() {
-    return (
-      <tr key={exerciseKey}>
-        <td><input type="text" placeholder='Exercise'/></td>
-        <td><input type="text" placeholder='Sets'/></td>
-        <td><input type="text" placeholder='Reps'/></td>
-        <td><input type="text" placeholder='Weight'/></td>
-        <td><button className="btn" onClick={() => removeExercise(exerciseKey)}>remove</button></td>
-      </tr>
-    );
-  }
+  useEffect(() => {
+    addExerciseRow()
+  }, [])
 
   return (
     <div className='fixed bottom-5 right-5'>
-      <button className="btn" onClick={() => document.getElementById('my_modal_1').showModal()}>Add Workout</button>
-      <dialog id="my_modal_1" className="modal">
-        <div className="modal-box max-w-screen-xl relative">
-          <h3 className="font-bold text-lg mb-4">Workout Log</h3>
-          <div className="overflow-x-auto">
+    <button className="btn btn-active" onClick={()=>document.getElementById('my_modal_3').showModal()}>Add Workout</button>
+    <dialog id="my_modal_3" className="modal">
+      <div className="modal-box max-w-screen-xl relative">
+        <h3 className="font-bold text-lg mb-4">Workout Log</h3>
+        <div className="overflow-x-auto">
+          <form onSubmit={postWorkout} method="dialog">
+            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" onClick={() => document.getElementById('my_modal_3').close()}>✕</button>
             <table className="table mb-16">
-              {/* head */}
               <thead>
                 <tr>
                   <th>EXERCISE</th>
@@ -44,13 +47,74 @@ function CreateWorkout() {
                 </tr>
               </thead>
               <tbody>
-                {exerciseRows}
+              {exerciseRows.map((exercise, index) => (
+              <tr key={index}>
+                <td>
+                  <input
+                    value={exercise.exercise} // Exercise
+                    onChange={(e) => {
+                      const updatedRows = [...exerciseRows];
+                      updatedRows[index].exercise = e.target.value;
+                      setExerciseRows(updatedRows);
+                    }}
+                    type="text"
+                    placeholder="Exercise"
+                    className="input input-bordered input-sm w-48 sm:w-64"
+                  />
+                </td>
+                <td>
+                  <input
+                    value={exercise.sets} // Sets
+                    onChange={(e) => {
+                      const updatedRows = [...exerciseRows];
+                      updatedRows[index].sets = e.target.value;
+                      setExerciseRows(updatedRows);
+                    }}
+                    type="number"
+                    placeholder="Sets"
+                    className="input input-bordered input-sm w-48 sm:w-42"
+                  />
+                </td>
+                <td>
+                  <input
+                    value={exercise.reps} // Reps
+                    onChange={(e) => {
+                      const updatedRows = [...exerciseRows];
+                      updatedRows[index].reps = e.target.value;
+                      setExerciseRows(updatedRows);
+                    }}
+                    type="number"
+                    placeholder="Reps"
+                    className="input input-bordered input-sm w-48 sm:w-42"
+                  />
+                </td>
+                <td>
+                  <input
+                    value={exercise.weight} // Weight
+                    onChange={(e) => {
+                      const updatedRows = [...exerciseRows];
+                      updatedRows[index].weight = e.target.value;
+                      setExerciseRows(updatedRows);
+                    }}
+                    type="number"
+                    placeholder="Weight"
+                    className="input input-bordered input-sm w-48 sm:w-42"
+                  />
+                </td>
+                <td>
+                  <button className="btn btn-outline btn-error btn-sm" onClick={() => removeExerciseRow(index)}>
+                    remove
+                  </button>
+                </td>
+              </tr>
+              ))}
               </tbody>
-            </table>
-          </div>
-          <div className="modal-action mt-4 absolute bottom-4 right-4">
-            <button className="btn" onClick={addAnotherExercise}>+ Exercise</button>
-            <button className="btn" onClick={() => document.getElementById('my_modal_1').close()}>Close</button>
+              </table>
+              <div className="modal-action mt-4 absolute bottom-4 right-4">
+                <button type="submit" className='btn btn-success btn-md'>Post</button>
+                <button className="btn bg-stone-900 text-white btn-md" onClick={addExerciseRow}>+ Exercise</button>
+              </div>
+            </form>
           </div>
         </div>
       </dialog>
