@@ -5,8 +5,8 @@ function useLoader(){
 
    function Loader(){
         return (
-            <div className="mt-24">
-               <span className="loading loading-ring loading-lg"></span>
+            <div>
+               <span className="loading loading-bars loading-lg"></span>
             </div>
         )
     }

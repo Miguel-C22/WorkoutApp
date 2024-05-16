@@ -18,10 +18,10 @@ function Selectors() {
 
   async function fetchData(e) {
     const exerciseValue = e.target.value;
+    await setLoading(true)
     setSelectedExercise(exerciseValue); // Update selected exercise first
     const data = await getSpecificExercises(exerciseValue); // Fetch data for the selected exercise
     setExerciseData(data);
-    setLoading(true)
   }
 
   useEffect(() => { 
@@ -69,11 +69,9 @@ function Selectors() {
               </select>
             </label>
             : ""}
-          <div>
 
-          {loading ?  Loader() : ""}
+            {loading ?  <div className='mt-24'>{Loader()}</div>: ""}
 
-        </div>
           {exerciseData ? <DisplayExercises exerciseData={exerciseData} />: ""}
         </div>
       </div>

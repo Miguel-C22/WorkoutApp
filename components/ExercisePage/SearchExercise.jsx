@@ -10,9 +10,9 @@ function SearchExercise() {
 
   async function fetchData(e) {
       e.preventDefault()
+      await setLoading(true)
       const data = await getSpecificExercises(exercise);
       setExerciseData(data);
-      setLoading(true)
     }
   
     useEffect(() => {
@@ -44,8 +44,7 @@ function SearchExercise() {
     </form>
   </div>
 
-  {loading ?  Loader() : ""}
-  
+  {loading ?  <div className='mt-24'>{Loader()}</div>: ""}
 
   <div>
     {exerciseData ? <DisplayExercises exerciseData={exerciseData} />: ""}

@@ -33,7 +33,11 @@ const createWorkout = new Schema({
       ],
       unique: true,
   },
-  exercises: [exerciseSchema] // Array of exercises
+  exercises: [exerciseSchema],
+  description: {
+    type: String,
+    required: false
+  }
 });
 
 const Workout = mongoose.models.Workout || mongoose.model("Workout", createWorkout)

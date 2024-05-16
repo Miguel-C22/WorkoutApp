@@ -1,12 +1,17 @@
 import {React, useState, useEffect} from 'react'
 import useUserInfo from '../customHooks/userInfo'
+import useAlert from '../customHooks/alert'
+import useLoader from '../customHooks/loader'
 
 function CreateWorkout() {
+  //State
   const [exerciseRows, setExerciseRows] = useState([]);
-  // const [userInfo, setUserInfo] = useState([])
-  const userInfo = useUserInfo();
+  const [description, setDescription] = useState("")
 
-  console.log(userInfo);
+  //Custom Hok
+  const userInfo = useUserInfo();
+  const {setAlertSuccess, setAlertFail, AlertComponent} = useAlert()
+  const { loading, setLoading, Loader } = useLoader()
  
   // Function to add a new row
   const addExerciseRow = () => {
@@ -23,12 +28,53 @@ function CreateWorkout() {
     setExerciseRows(exerciseRows.filter((_, index) => index !== indexToRemove));
   };
 
-  const postWorkout = (e) => {
+  //Post Workout
+  const postWorkout  = async (e) => {
     e.preventDefault()
-    console.log(userInfo.email)
-    console.log(userInfo.userId)
-   
+    await setLoading(true)
+    const postData = {
+      userId: userInfo.userId, 
+      email: userInfo.email,
+      exercises: exerciseRows,
+      description: description
+    }
+    try {
+      const response = await fetch("http://localhost:3000/api/createWorkout", {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(postData),
+    })
+    console.log(postData)
+    if(response){
+      resetForm()
+      setTimeout(function (){
+        setAlertSuccess(false)
+      }, 5000)
+      setAlertSuccess(true)
+      setLoading(false)
+      console.log("Workout Posted")
+    }
+    } catch (error) {
+      setTimeout(function (){
+        setAlertFail(false)
+      }, 5000)
+      setAlertFail(true)
+      setLoading(false)
+      console.log(error)
+    }
   }
+
+  const resetForm = () => {
+    setExerciseRows([{
+      exercise: '',
+      sets: '',
+      reps: '',
+      weight: ''
+    }]);
+    setDescription('');
+  };
 
   useEffect(() => {
     addExerciseRow()
@@ -44,7 +90,7 @@ function CreateWorkout() {
         <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" onClick={() => document.getElementById('my_modal_3').close()}>✕</button>
         <div className="overflow-x-auto relative">
           <form onSubmit={postWorkout} method="dialog">
-            <table className="table mb-24">
+            <table className="table mb-8">
               <thead>
                 <tr>
                   <th>EXERCISE</th>
@@ -67,6 +113,7 @@ function CreateWorkout() {
                     type="text"
                     placeholder="Exercise"
                     className="input input-bordered input-sm w-48 sm:w-64"
+                    required
                   />
                 </td>
                 <td>
@@ -80,6 +127,7 @@ function CreateWorkout() {
                     type="number"
                     placeholder="Sets"
                     className="input input-bordered input-sm w-48 sm:w-42"
+                    required
                   />
                 </td>
                 <td>
@@ -93,6 +141,7 @@ function CreateWorkout() {
                     type="number"
                     placeholder="Reps"
                     className="input input-bordered input-sm w-48 sm:w-42"
+                    required
                   />
                 </td>
                 <td>
@@ -106,23 +155,46 @@ function CreateWorkout() {
                     type="number"
                     placeholder="Weight"
                     className="input input-bordered input-sm w-48 sm:w-42"
+                    required
                   />
                 </td>
                 <td>
-                  <button className="btn btn-outline btn-error btn-sm" onClick={() => removeExerciseRow(index)}>
+                {exerciseRows.length > 1 && (
+                  <button 
+                    type="button"
+                    className="btn btn-outline btn-error btn-sm" 
+                    onClick={() => removeExerciseRow(index)}
+                    >
                     remove
                   </button>
+                )}
                 </td>
               </tr>
               ))}
               </tbody>
               </table>
-              <div className="modal-action mt-4 absolute bottom-4 right-4">
+
+              <textarea 
+              value={description}
+              onChange={(e) => (setDescription(e.target.value))}
+              className="textarea textarea-bordered w-full mb-24" 
+              placeholder="Description">
+              </textarea>
+        
+              <div className="modal-action mt-4 absolute bottom-0 left-4 sm:right-4">
                 <button type="submit" className='btn btn-success btn-md'>Post</button>
-                <button className="btn bg-stone-900 text-white btn-md" onClick={addExerciseRow}>+ Exercise</button>
+                <button className="btn bg-stone-900 text-white btn-md" 
+                onClick={(e) => {
+                    e.preventDefault();
+                    addExerciseRow();
+                  }}>+ Exercise</button>
               </div>
             </form>
           </div>
+        </div>
+        {loading ? <div className='absolute'>{Loader()}</div> : ""}
+        <div className='absolute w-64 sm:w-96'>
+          <AlertComponent />
         </div>
       </dialog>
     </div>
