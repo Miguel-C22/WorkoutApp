@@ -1,7 +1,6 @@
 import React from "react"
 import UserProfileImage from "../../../components/UserProfileImage";
 import UserName from "../../../components/UserName";
-import Link from 'next/link';
 
 function page() {
   return (

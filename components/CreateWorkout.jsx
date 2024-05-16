@@ -1,8 +1,13 @@
 import {React, useState, useEffect} from 'react'
+import useUserInfo from '../customHooks/userInfo'
 
 function CreateWorkout() {
   const [exerciseRows, setExerciseRows] = useState([]);
+  // const [userInfo, setUserInfo] = useState([])
+  const userInfo = useUserInfo();
 
+  console.log(userInfo);
+ 
   // Function to add a new row
   const addExerciseRow = () => {
     setExerciseRows([...exerciseRows, {
@@ -11,7 +16,6 @@ function CreateWorkout() {
       reps: '',
       weight: ''
     }]);
-    console.log(exerciseRows)
   };
 
   // Function to remove a row
@@ -21,12 +25,15 @@ function CreateWorkout() {
 
   const postWorkout = (e) => {
     e.preventDefault()
-    console.log(exerciseRows)
+    console.log(userInfo.email)
+    console.log(userInfo.userId)
+   
   }
 
   useEffect(() => {
     addExerciseRow()
   }, [])
+
 
   return (
     <div className='fixed bottom-5 right-5'>
