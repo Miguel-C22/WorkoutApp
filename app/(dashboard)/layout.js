@@ -19,6 +19,7 @@ function layout({children}) {
                     <li><Link href="/aitrainer">Trainer</Link></li>
                     <li><Link href="/exercises">Exercises</Link></li>
                     <li><Link href="/explore">Explore</Link></li>
+                    <li><Link href="/accountSettings">Settings</Link></li>
                 </ul>
                 </div>
                 <a className="btn btn-ghost text-xl">Workout App</a>
@@ -30,6 +31,8 @@ function layout({children}) {
                     <li><Link href="/aitrainer">Trainer</Link></li>
                     <li><Link href="/exercises">Exercises</Link></li>
                     <li><Link href="/explore">Explore</Link></li>
+                    <li><Link href="/accountSettings">Settings</Link></li>
+
                 </ul>
             </div>
             <div className="navbar-end">

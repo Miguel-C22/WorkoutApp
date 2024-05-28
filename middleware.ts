@@ -3,7 +3,8 @@ import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server';
 const isProtectedRoute = createRouteMatcher([
  '/livefeed',
  '/profile',
- '/aitrainer'
+ '/aitrainer',
+ '/accountSettings'
 ]);
  
 export default clerkMiddleware((auth, req) => {

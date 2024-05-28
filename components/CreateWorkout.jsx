@@ -1,15 +1,16 @@
 import {React, useState, useEffect} from 'react'
-import useUserInfo from '../customHooks/userInfo'
 import useAlert from '../customHooks/alert'
 import useLoader from '../customHooks/loader'
+import { useUser } from '@clerk/clerk-react';
 
 function CreateWorkout() {
+  const { user } = useUser();
+  
   //State
   const [exerciseRows, setExerciseRows] = useState([]);
   const [description, setDescription] = useState("")
 
-  //Custom Hok
-  const userInfo = useUserInfo();
+  //Custom Hook
   const {setAlertSuccess, setAlertFail, AlertComponent} = useAlert()
   const { loading, setLoading, Loader } = useLoader()
  
@@ -33,8 +34,8 @@ function CreateWorkout() {
     e.preventDefault()
     await setLoading(true)
     const postData = {
-      userId: userInfo.userId, 
-      email: userInfo.email,
+      userId: user.id, 
+      email: user.emailAddresses[0]?.emailAddress,
       exercises: exerciseRows,
       description: description
     }
