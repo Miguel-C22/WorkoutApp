@@ -11,8 +11,6 @@ function PR() {
 
   const { user } = useUser();
 
-  console.log(user.id)
-
   function clearPrs () {
     setPrs({
       bench: '',
@@ -30,7 +28,7 @@ function PR() {
     }
     console.log(updatePrs)
     try {
-      const response = await fetch(`http://localhost:3000/api/accountSettings/664c022ae42cc45988ce76fc`, {
+      const response = await fetch(`http://localhost:3000/api/accountSettings/${user.id}`, {
         method: "PATCH",
         headers: {
           'Content-Type': 'application/json',
