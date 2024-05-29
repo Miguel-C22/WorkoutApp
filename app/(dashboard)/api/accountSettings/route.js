@@ -9,9 +9,9 @@ export async function POST(request){
             email, 
             userName,
             profilePicture = "",  
-            prBench = null,
-            prDeadLift = null,
-            prSquat = null,
+            prBench = 0,
+            prDeadLift = 0,
+            prSquat = 0,
             bio = ""
         } = await request.json()
         await connectMongoDB()

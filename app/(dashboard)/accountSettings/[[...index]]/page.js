@@ -3,24 +3,29 @@ import { useState, useEffect } from 'react'
 import Profile from '../../../../components/AccountSettings/Profile'
 import PR from '../../../../components/AccountSettings/PR'
 import BIO from '../../../../components/AccountSettings/BIO'
+import { useUser } from '@clerk/clerk-react';
 
 function page() {
   const [selectedComponent, setSelectedComponent] = useState(null);
   const [userData, setUserData] = useState()
+  const { user } = useUser();
+  
 
   useEffect(() => {
-    fetchUserData()
-  },[])
+    if(user){
+      fetchUserData(user.id)
+    }
+  },[user])
 
-  async function fetchUserData(){
-    const response = await fetch("http://localhost:3000/api/accountSettings/user_2gyzxdzRdeFf7M05mBnWqbi7Z1n", {
+  async function fetchUserData(id){
+    const response = await fetch(`http://localhost:3000/api/accountSettings/${id}`, {
             method: "GET",
             headers: {
                 'Content-Type': 'application/json',
             },
         });
         const data = await response.json();
-        setUserData(data.data[0])
+        setUserData(data.data[0])  
 }
 
   function ProfileComponent(){
