@@ -1,11 +1,27 @@
 'use client'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Profile from '../../../../components/AccountSettings/Profile'
 import PR from '../../../../components/AccountSettings/PR'
 import BIO from '../../../../components/AccountSettings/BIO'
 
 function page() {
   const [selectedComponent, setSelectedComponent] = useState(null);
+  const [userData, setUserData] = useState()
+
+  useEffect(() => {
+    fetchUserData()
+  },[])
+
+  async function fetchUserData(){
+    const response = await fetch("http://localhost:3000/api/accountSettings/user_2gyzxdzRdeFf7M05mBnWqbi7Z1n", {
+            method: "GET",
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+        const data = await response.json();
+        setUserData(data.data[0])
+}
 
   function ProfileComponent(){
     setSelectedComponent("profile")
@@ -22,9 +38,9 @@ function page() {
       case 'profile':
         return <Profile />;
       case 'pr':
-        return <PR />;
+        return <PR userData={userData} fetchUpdatedData={fetchUserData} />;
       case 'bio':
-        return <BIO />;
+        return <BIO userData={userData} fetchUpdatedData={fetchUserData}/>;
       default:
         return null;
     }

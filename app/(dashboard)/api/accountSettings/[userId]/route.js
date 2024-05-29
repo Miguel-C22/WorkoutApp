@@ -43,3 +43,22 @@ export async function PATCH(request, {params}){
         // Handling errors
         return NextResponse.json({ message: `Failed to update User Account Data for User ID:${userId}`}, { status: 404 });    }
 }
+
+
+export async function GET(request, { params }) {
+  try {
+    const userId = params.userId;
+
+    await connectMongoDB();
+    const individualUser = await UserData.find({ userId: userId });
+
+    if (!individualUser) {
+      return NextResponse.json({ message: "User not found" }, { status: 404 });
+    }
+
+    return NextResponse.json({ message: "User found", data: individualUser }, { status: 200 });
+  } catch (error) {
+    console.error('Error fetching user data:', error);
+    return NextResponse.json({ message: "Internal Server Error" }, { status: 500 });
+  }
+}

@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import { useUser } from '@clerk/clerk-react';
 
-function PR() {
-  //Add the placeholders for each input the users value for each PR
+function PR({ userData, fetchUpdatedData }) {
+
+  const { user } = useUser();
+
   const [prs, setPrs] = useState({
     bench: null, 
     squat: null, 
     deadLift: null,
   })
-
-  const { user } = useUser();
 
   function clearPrs () {
     setPrs({
@@ -20,13 +20,11 @@ function PR() {
   }
 
   async function handleSubmit () {
-    console.log(prs.bench)
     const updatePrs = {
       prBench: prs.bench,
       prSquat: prs.squat,
       prDeadLift: prs.deadLift,
     }
-    console.log(updatePrs)
     try {
       const response = await fetch(`http://localhost:3000/api/accountSettings/${user.id}`, {
         method: "PATCH",
@@ -35,6 +33,7 @@ function PR() {
         },
         body: JSON.stringify(updatePrs),
       })
+      fetchUpdatedData()
       if(!response) {
         console.log("Failed")
       }
@@ -42,7 +41,6 @@ function PR() {
     } catch (error) {
       
     }
-
   }
 
   return (
@@ -58,9 +56,9 @@ function PR() {
         </div>
         <input 
           type="number" 
-          placeholder="Type here"
+          placeholder="Lbs"
           className="input input-bordered w-full max-w-xs  bg-white" 
-          value={prs.bench ?? ''}
+          value={prs.bench ?? userData.prBench}
           onChange={(e) => setPrs({...prs, bench: e.target.value})}
         />
       </label>
@@ -70,11 +68,10 @@ function PR() {
         </div>
         <input 
           type="number" 
-          placeholder="Type here"  
+          placeholder="Lbs"  
           className="input input-bordered w-full max-w-xs  bg-white" 
-          value={prs.squat ?? ''}
+          value={prs.squat ?? userData.prSquat}
           onChange={(e) => setPrs({...prs, squat: e.target.value})}
-
         />
       </label>
       <label className="form-control w-full max-w-xs">
@@ -83,9 +80,9 @@ function PR() {
         </div>
         <input 
           type="number" 
-          placeholder="Type here" 
+          placeholder="Lbs" 
           className="input input-bordered w-full max-w-xs bg-white" 
-          value={prs.deadLift ?? ''}
+          value={prs.deadLift ?? userData.prDeadLift}
           onChange={(e) => setPrs({...prs, deadLift: e.target.value})}
 
         />
