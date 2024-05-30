@@ -1,21 +1,17 @@
 import React, { useState } from 'react';
 import { useUser } from '@clerk/clerk-react';
 
-function PR({ userData, fetchUpdatedData }) {
+function PR({ userData }) {
 
   const { user } = useUser();
 
-  const [prs, setPrs] = useState({
-    bench: null, 
-    squat: null, 
-    deadLift: null,
-  })
+  const [prs, setPrs] = useState({})
 
   function clearPrs () {
     setPrs({
-      bench: '',
-      squat: '',
-      deadLift: '',
+      bench: 0,
+      squat: 0,
+      deadLift: 0,
     });
   }
 
@@ -33,7 +29,6 @@ function PR({ userData, fetchUpdatedData }) {
         },
         body: JSON.stringify(updatePrs),
       })
-      fetchUpdatedData()
       if(!response) {
         console.log("Failed")
       }

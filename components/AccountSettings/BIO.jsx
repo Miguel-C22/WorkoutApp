@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useUser } from '@clerk/clerk-react';
 
-function BIO({ userData, fetchUpdatedData }) {
+function BIO({ userData }) {
+  
   const { user } = useUser();
 
   const [bio, setBio] = useState()
@@ -22,7 +23,6 @@ function BIO({ userData, fetchUpdatedData }) {
         },
         body: JSON.stringify(usersBio),
       })
-      fetchUpdatedData()
       if(!response) {
         console.log("Failed")
       }
@@ -30,7 +30,6 @@ function BIO({ userData, fetchUpdatedData }) {
     } catch (error) {
       
     }
-
   }
 
   return (

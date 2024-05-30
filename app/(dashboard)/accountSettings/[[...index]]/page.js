@@ -10,7 +10,6 @@ function page() {
   const [userData, setUserData] = useState()
   const { user } = useUser();
   
-
   useEffect(() => {
     if(user){
       fetchUserData(user.id)
@@ -28,24 +27,21 @@ function page() {
         setUserData(data.data[0])  
 }
 
-  function ProfileComponent(){
-    setSelectedComponent("profile")
+function handleComponentSelection(component) {
+  setSelectedComponent(component);
+  if (user) {
+    fetchUserData(user.id);
   }
-  function PRComponent (){
-    setSelectedComponent("pr")
-  }
-  function BIOComponent (){
-    setSelectedComponent("bio")
-  }
+}
 
  function renderComponent() {
     switch (selectedComponent) {
       case 'profile':
         return <Profile />;
       case 'pr':
-        return <PR userData={userData} fetchUpdatedData={fetchUserData} />;
+        return <PR userData={userData}/>;
       case 'bio':
-        return <BIO userData={userData} fetchUpdatedData={fetchUserData}/>;
+        return <BIO userData={userData}/>;
       default:
         return null;
     }
@@ -53,13 +49,25 @@ function page() {
 
   return (
     <div className='flex flex-col gap-8 items-center'>
-      <button className='btn bg-stone-900 text-white btn-md w-56 md:w-96 lg:w-96 sm:w-96' onClick={ProfileComponent}>Profile</button>
-      <button className='btn bg-stone-900 text-white btn-md w-56 md:w-96 lg:w-96 sm:w-96' onClick={PRComponent}>PRS</button>
-      <button className='btn bg-stone-900 text-white btn-md w-56 md:w-96 lg:w-96 sm:w-96' onClick={BIOComponent}>BIO</button>
+      <button 
+        className='btn bg-stone-900 text-white btn-md w-56 md:w-96 lg:w-96 sm:w-96' 
+        onClick={() => handleComponentSelection('profile')}>
+        Profile
+      </button>
+      <button 
+        className='btn bg-stone-900 text-white btn-md w-56 md:w-96 lg:w-96 sm:w-96' 
+        onClick={() => handleComponentSelection('pr')}>
+        PRS
+      </button>
+      <button 
+        className='btn bg-stone-900 text-white btn-md w-56 md:w-96 lg:w-96 sm:w-96' 
+        onClick={() => handleComponentSelection('bio')}>
+        BIO
+      </button>
       {/* Render the selected component */}
       {renderComponent()}
     </div>
-  )
+  );
 }
 
 export default page
