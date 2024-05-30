@@ -37,7 +37,7 @@ function handleComponentSelection(component) {
  function renderComponent() {
     switch (selectedComponent) {
       case 'profile':
-        return <Profile />;
+        return <Profile username={userData.userName} email={userData.email} profilePicture={userData.profilePicture}/>;
       case 'pr':
         return <PR userData={userData}/>;
       case 'bio':

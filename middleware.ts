@@ -4,7 +4,7 @@ const isProtectedRoute = createRouteMatcher([
  '/livefeed',
  '/profile',
  '/aitrainer',
- '/accountSettings'
+ '/accountSettings',
 ]);
  
 export default clerkMiddleware((auth, req) => {
