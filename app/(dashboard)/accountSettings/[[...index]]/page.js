@@ -4,6 +4,101 @@ import Profile from '../../../../components/AccountSettings/Profile'
 import PR from '../../../../components/AccountSettings/PR'
 import BIO from '../../../../components/AccountSettings/BIO'
 import { useUser } from '@clerk/clerk-react';
+import useFetchUserData from '../../../../customHooks/fetchUserData'
+
+function page() {
+  const [selectedComponent, setSelectedComponent] = useState(null);
+  const { user } = useUser();
+  const {userData, fetchUserData} = useFetchUserData();
+  
+  useEffect(() => {
+      if (user) {
+          fetchUserData(user.id);
+      }
+  }, [user]);
+
+  function handleComponentSelection(component) {
+      setSelectedComponent(component);
+      if (user) {
+          fetchUserData(user.id);
+      }
+  }
+
+  function renderComponent() {
+      switch (selectedComponent) {
+          case 'profile':
+              return <Profile username={userData.userName} email={userData.email} profilePicture={userData.profilePicture} />;
+          case 'pr':
+              return <PR userData={userData} />;
+          case 'bio':
+              return <BIO userData={userData} />;
+          default:
+              return null;
+      }
+  }
+
+  return (
+    <div className='flex flex-col gap-8 items-center'>
+      <button 
+        className='btn bg-stone-900 text-white btn-md w-56 md:w-96 lg:w-96 sm:w-96' 
+        onClick={() => handleComponentSelection('profile')}>
+        Profile
+      </button>
+      <button 
+        className='btn bg-stone-900 text-white btn-md w-56 md:w-96 lg:w-96 sm:w-96' 
+        onClick={() => handleComponentSelection('pr')}>
+        PRS
+      </button>
+      <button 
+        className='btn bg-stone-900 text-white btn-md w-56 md:w-96 lg:w-96 sm:w-96' 
+        onClick={() => handleComponentSelection('bio')}>
+        BIO
+      </button>
+      {/* Render the selected component */}
+      {renderComponent()}
+    </div>
+  );
+}
+
+export default page
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+
+OLD WAY! KEEPING THIS JUST FOR NOW
+
 
 function page() {
   const [selectedComponent, setSelectedComponent] = useState(null);
@@ -64,10 +159,11 @@ function handleComponentSelection(component) {
         onClick={() => handleComponentSelection('bio')}>
         BIO
       </button>
-      {/* Render the selected component */}
       {renderComponent()}
     </div>
   );
 }
 
 export default page
+
+*/
