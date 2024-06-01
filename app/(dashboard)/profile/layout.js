@@ -1,9 +1,9 @@
 "use client"
 import { useState } from 'react'
-import CreateWorkout  from "../../../components/CreateWorkout"
-import PostPage from "../../../components/Post-Private-Saved-Pages/PostPage"
-import Private from "../../../components/Post-Private-Saved-Pages/Private"
-import Saved from "../../../components/Post-Private-Saved-Pages/Saved"
+import CreateWorkout  from "../../../components/ProfilePage/CreateWorkout"
+import PostPage from "../../../components/ProfilePage/PostPage"
+import Private from "../../../components/ProfilePage/Private"
+import Saved from "../../../components/ProfilePage/Saved"
 
 function layout({children}) {
   const [selectedComponent, setSelectedComponent] = useState(null);

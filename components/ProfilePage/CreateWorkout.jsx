@@ -1,6 +1,6 @@
 import {React, useState, useEffect} from 'react'
-import useAlert from '../customHooks/alert'
-import useLoader from '../customHooks/loader'
+import useAlert from '../../customHooks/alert'
+import useLoader from '../../customHooks/loader'
 import { useUser } from '@clerk/clerk-react';
 
 function CreateWorkout() {
