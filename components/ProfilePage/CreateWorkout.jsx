@@ -9,6 +9,7 @@ function CreateWorkout() {
   //State
   const [exerciseRows, setExerciseRows] = useState([]);
   const [description, setDescription] = useState("")
+  const [postType, setPostType] = useState("private")
 
   //Custom Hook
   const {setAlertSuccess, setAlertFail, AlertComponent} = useAlert()
@@ -37,7 +38,8 @@ function CreateWorkout() {
       userId: user.id, 
       email: user.emailAddresses[0]?.emailAddress,
       exercises: exerciseRows,
-      description: description
+      description: description,
+      postType: postType
     }
     try {
       const response = await fetch("http://localhost:3000/api/createWorkout", {
@@ -75,11 +77,20 @@ function CreateWorkout() {
       weight: ''
     }]);
     setDescription('');
+    setPostType('private')
   };
 
   useEffect(() => {
     addExerciseRow()
   }, [])
+
+  const handleCheckboxChange = (e) => {
+    if (e.target.checked) {
+      setPostType("public");
+    } else {
+      setPostType("private");
+    }
+  };
 
 
   return (
@@ -88,9 +99,18 @@ function CreateWorkout() {
     <dialog id="my_modal_3" className="modal">
       <div className="modal-box max-w-screen-xl relative">
         <h3 className="font-bold text-lg mb-4">Workout Log</h3>
+
+        {/*Check box on if the user wants their post to be Public or Private*/}
+        <input type="checkbox" className="toggle" checked={postType === "public"} 
+          onChange={handleCheckboxChange}/>
+        <p>{postType}</p>
+        
+
         <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" onClick={() => document.getElementById('my_modal_3').close()}>✕</button>
         <div className="overflow-x-auto relative">
           <form onSubmit={postWorkout} method="dialog">
+
+            {/*Workout table to log your workout*/}
             <table className="table mb-8">
               <thead>
                 <tr>
@@ -175,15 +195,17 @@ function CreateWorkout() {
               </tbody>
               </table>
 
+              {/*Bio*/}
               <textarea 
               value={description}
               onChange={(e) => (setDescription(e.target.value))}
               className="textarea textarea-bordered w-full mb-24" 
               placeholder="Description">
               </textarea>
-        
+              
+              {/*post button and add another exercise button*/}
               <div className="modal-action mt-4 absolute bottom-0 left-4 sm:right-4">
-                <button type="submit" className='btn btn-success btn-md'>Post</button>
+              <button type="submit" className='btn btn-success btn-md'>Post</button>
                 <button className="btn bg-stone-900 text-white btn-md" 
                 onClick={(e) => {
                     e.preventDefault();

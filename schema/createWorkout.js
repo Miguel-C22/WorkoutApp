@@ -37,6 +37,10 @@ const createWorkout = new Schema({
   description: {
     type: String,
     required: false
+  },
+  postType: {
+    type: String,
+    required: true
   }
 });
 
