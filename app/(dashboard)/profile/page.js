@@ -1,4 +1,3 @@
-import React from "react"
 import UserProfileImage from "../../../components/UserProfileImage";
 import UserName from "../../../components/UserName";
 import useSaveNewUser from "../../../customHooks/saveNewUser"

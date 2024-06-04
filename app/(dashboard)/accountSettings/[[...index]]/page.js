@@ -5,11 +5,13 @@ import PR from '../../../../components/AccountSettings/PR'
 import BIO from '../../../../components/AccountSettings/BIO'
 import { useUser } from '@clerk/clerk-react';
 import useFetchUserData from '../../../../customHooks/fetchUserData'
+import { useClerk } from '@clerk/nextjs';
 
 function page() {
   const [selectedComponent, setSelectedComponent] = useState(null);
   const { user } = useUser();
   const {userData, fetchUserData} = useFetchUserData();
+  const { signOut } = useClerk();
   
   useEffect(() => {
       if (user) {
@@ -54,6 +56,13 @@ function page() {
         onClick={() => handleComponentSelection('bio')}>
         BIO
       </button>
+      <button 
+        className='btn btn-error text-white btn-md w-56 md:w-96 lg:w-96 sm:w-96' 
+        onClick={() => signOut({ redirectUrl: '/' })}
+      >
+        Sign Out
+      </button>
+      
       {/* Render the selected component */}
       {renderComponent()}
     </div>
@@ -61,7 +70,6 @@ function page() {
 }
 
 export default page
-
 
 
 
