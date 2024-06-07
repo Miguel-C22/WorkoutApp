@@ -2,6 +2,7 @@ import connectMongoDB from "../../../../db/connectDB"
 import Workout from '../../../../schema/createWorkout'
 import { NextResponse } from "next/server"
 
+//Create a workout
 export async function POST(request){
     try {
         const { userId, email, exercises, description, postType } = await request.json();
@@ -13,3 +14,4 @@ export async function POST(request){
     }
     
 }
+
