@@ -1,12 +1,27 @@
 "use client"
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import CreateWorkout  from "../../../components/ProfilePage/CreateWorkout"
 import PostPage from "../../../components/ProfilePage/PostPage"
 import Private from "../../../components/ProfilePage/Private"
 import Saved from "../../../components/ProfilePage/Saved"
 
+import useFetchUsersPosts from '../../../customHooks/fetchUsersPosts'
+
 function layout({children}) {
-  const [selectedComponent, setSelectedComponent] = useState(null);
+  const [selectedComponent, setSelectedComponent] = useState('public');
+
+  const { fetchPosts, publicData, privateData } = useFetchUsersPosts();
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    fetchPosts();
+  }, []);
+
+  const handleWorkoutSubmission = async () => {
+    setLoading(true);
+    await fetchPosts();
+    setLoading(false);
+  };
 
   function handleComponentSelection(component) {
     setSelectedComponent(component);
@@ -15,34 +30,34 @@ function layout({children}) {
 
   function renderComponent() {
     switch (selectedComponent) {
-        case 'profile':
-            return <PostPage />
-        case 'pr':
+        case 'public':
+            return <PostPage  publicData={publicData} loading={loading} />
+        case 'private':
             return  <Private />
-        case 'bio':
+        case 'saved':
             return <Saved />
         default:
-            return null;
+            return <p>Error</p>;
     }
 }
   
   return (
     <div>
       {children}
-      <CreateWorkout />
+      <CreateWorkout onWorkoutSubmit={handleWorkoutSubmission}/>
       <div className="flex justify-center gap-4 mt-24">
         <button 
-          onClick={() => handleComponentSelection('profile')}>
+          onClick={() => handleComponentSelection('public')}>
           Posts
         </button>
         <span>|</span>
         <button 
-          onClick={() => handleComponentSelection('pr')}>
+          onClick={() => handleComponentSelection('private')}>
           Private
         </button>
         <span>|</span>
         <button 
-          onClick={() => handleComponentSelection('bio')}>
+          onClick={() => handleComponentSelection('saved')}>
           Saved
         </button>
       </div>

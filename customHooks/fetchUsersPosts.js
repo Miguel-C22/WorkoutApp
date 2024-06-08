@@ -8,12 +8,14 @@ function useFetchUsersPosts(){
     const [privateData, setPrivateData] = useState([])
 
     useEffect(() => {
-        fetchPosts()
-    },[])
+        if(user){
+            fetchPosts(user.id);
+        }
+    },[user])
 
-    async function fetchPosts(){
+    async function fetchPosts(userId){
         try {
-            const response = await fetch(`http://localhost:3000/api/createWorkout/${user.id}`, {
+            const response = await fetch(`http://localhost:3000/api/createWorkout/${userId}`, {
                 method: "GET",
                 headers: {
                     'Content-Type': 'application/json',
@@ -35,7 +37,7 @@ function useFetchUsersPosts(){
         }
     }
 
-    return { fetchPosts, publicData, privateData }
+    return {  fetchPosts, publicData, privateData }
 }
 
 export default useFetchUsersPosts
